@@ -4,6 +4,8 @@
 #include "Adafruit_SHT4x.h"
 #include <WiFi.h>
 
+//#define SERIAL_MONITOR
+
 Adafruit_LPS25 lps;
 Adafruit_SHT4x sht4 = Adafruit_SHT4x();
 
@@ -39,10 +41,24 @@ void loop() {
   sht4.getEvent(&sht40_rh, &sht40_temp);
   long rssi = WiFi.RSSI();
   
+  #ifndef SERIAL_MONITOR
   Serial.print("LPS25 Temperature: ");Serial.print(lps25_temp.temperature);Serial.println(" degrees C");
   Serial.print("SHT40 Temperature: "); Serial.print(sht40_temp.temperature); Serial.println(" degrees C");
   Serial.print("LPS25 Pressure: ");Serial.print(lps25_pressure.pressure);Serial.println(" hPa");
   Serial.print("SHT40 Humidity: "); Serial.print(sht40_rh.relative_humidity); Serial.println("% rH");
+  #endif
+
+  #ifdef SERIAL_MONITOR
+  Serial.print("SHT40 Temperature:");
+  Serial.print(sht40_temp.temperature);
+  Serial.print(",");
+  Serial.print("SHT40 Humidity:");
+  Serial.print(sht40_rh.relative_humidity);
+  Serial.print(",");
+  Serial.print("LPS25 Pressure:");
+  Serial.print(lps25_pressure.pressure);
+  Serial.println("");
+  #endif
 
   WiFiClient client = server.available();
   if (client) {
