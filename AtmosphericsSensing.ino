@@ -10,7 +10,7 @@ Adafruit_LPS25 lps;
 Adafruit_SHT4x sht4 = Adafruit_SHT4x();
 
 char ssid[] = "JARVARS";
-char pass[] = "%appdata%";
+char pass[] = "password";
 
 WiFiServer server(8080);
 
